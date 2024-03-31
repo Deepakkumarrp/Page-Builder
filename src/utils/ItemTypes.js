@@ -1,7 +1,3 @@
-const itemTypes = {
-    label: "label",
-    input: "input",
-    button: "button",
-}
+const itemTypes = "element";
 
 export default itemTypes;

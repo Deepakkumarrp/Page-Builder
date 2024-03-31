@@ -1,30 +1,40 @@
 import React, { useState } from "react";
-// import CreateElement from "./ElementRenderer";
+import idGenerator from "../utils/idGenerator";
 
-const Modal = ({ isOpen, handleClose, modalType, handleAddElement }) => {
+const Modal = ({ isOpen, handleClose, modalType, handleElement }) => {
     if (!isOpen) return null;
+    const { elements,
+            handleAddElement,
+            handleUpdateElement,
+            handleDeleteElement } = handleElement;
+
     const [config, setConfig] = useState({
+            id: modalType.id ,
             type: modalType.type,
             x: modalType.x,
             y: modalType.y,
-            fontSize : 16,
-            fontWeight: 400,
-            text: ""
+            fontSize : modalType.fontSize,
+            fontWeight: modalType.fontWeight,
+            text: modalType.text
     });
-    console.log(config);
+    console.log("Model:", config);
 
   function handleSave(e) {
     e.preventDefault();
-    console.log("clicked",e)
-    console.log(config)
-    // handleAddElement();
+    // const p = elements.filter((el) => el.id === config.id );
+    // console.log(p);
+    // if(p.length > 0){
+
+    // }
+    console.log(config);
+    console.log("saved");
+    handleAddElement(config);
     handleClose();
   }
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setConfig({ ...config, [name]: value });
-    console.log(config)
   };
   return (
     <div className="modal">
@@ -64,7 +74,7 @@ const Modal = ({ isOpen, handleClose, modalType, handleAddElement }) => {
                 <input type="number" name="fontSize" value={config.fontSize} onChange={handleChange} />
             </label>
         </div>
-            <button onClick={handleSave}>Save</button>
+            <button>Save</button>
         </form>
       </div>
     </div>
