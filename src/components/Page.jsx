@@ -20,13 +20,13 @@ const Page = () => {
   });
 
   useEffect(() => {
-    // Load elements data from local storage on component mount
+    
     const storedElements = JSON.parse(localStorage.getItem("elements")) || [];
     setElements(storedElements);
   }, []);
 
   useEffect(() => {
-    // Save elements data to local storage whenever it changes
+    
     localStorage.setItem("elements", JSON.stringify(elements));
   }, [elements]);
 
