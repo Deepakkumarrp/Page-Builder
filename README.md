@@ -53,3 +53,16 @@ Use the export functionality to export the current page configuration to a JSON 
 ### Technologies Used
 React
 React DnD (React Drag and Drop)
+
+## Project Screenshots 
+- **Home:**
+  ![Home](https://github.com/Deepakkumarrp/Page-Builder/blob/master/src/Screenshots/Home.png)
+
+- **Drop Elements:**
+  ![Sign Up](https://github.com/Deepakkumarrp/Page-Builder/blob/master/src/Screenshots/DropElements.png)
+
+- **Modal:**
+  ![Log In](https://github.com/Deepakkumarrp/Page-Builder/blob/master/src/Screenshots/Modals.png)
+
+- **Drag Elements**
+![HTML Compiler](https://github.com/Deepakkumarrp/Page-Builder/blob/master/src/Screenshots/DragElements.png)
