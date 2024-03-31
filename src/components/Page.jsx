@@ -1,25 +1,29 @@
 import React, { useRef, useState } from "react";
 import { useDrop } from "react-dnd";
 import Modal from "./Modal";
+// import ElementRenderer from "./ElementRenderer";
 
 const Page = ({ children }) => {
     
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [elements,setElements] = useState([]);
+  const [modalType, setModalType] = useState({
+    type: "",
+    x: 30,
+    y: 30
+  });
 
   const [{isOver}, drop] = useDrop(() => ({
     accept: "Card",
     drop: (item,monitor) => {
-        console.log("Item: ",item);
-        console.log("MOnitor: ",monitor);
-        setIsModalOpen(true);
         const mousePosition = monitor.getClientOffset();
         const { x, y } = mousePosition;
-        // Here you can open your modal for configuration
+        handleModalOpen(item.type,x,y)
+        
+        // setIsModalOpen(true);
         console.log('Element dropped at:', x, y);
-        // You can also update your state to render the element at the dropped position
 
-        const newElement = { type, x, y };
+        const newElement = { type: item.type, x, y };
         // Call a function to handle adding the new element to the state
         handleAddElement(newElement);
     },
@@ -29,6 +33,14 @@ const Page = ({ children }) => {
     })
   }));
 
+  function handleModalOpen (type, x,y) {
+    setModalType({
+        type: type,
+        x :x,
+        y :y,
+    })
+    setIsModalOpen(true);
+  }
   const handleAddElement = (newElement) => {
     setElements([...elements, newElement]);
   };
@@ -46,7 +58,14 @@ const Page = ({ children }) => {
       <h1>Page</h1>
       {children}
 
-      <Modal isOpen={isModalOpen} handleClose={() => setIsModalOpen(false)} />
+        {/* Render Modal */}
+      <Modal isOpen={isModalOpen} handleClose={() => setIsModalOpen(false)} modalType={modalType} handleAddElement={handleAddElement} />
+
+      {/* Render the elements */}
+      {/* {elements.map((element, index) => (
+        <ElementRenderer key={index} config={element} />
+      ))} */}
+
     </div>
   );
 };

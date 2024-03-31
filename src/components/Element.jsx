@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
-import { useDrag } from "react-dnd";
+import { DragPreviewImage, useDrag } from "react-dnd";
 import itemTypes from "../utils/ItemTypes";
 
-const Element = ({ type }) => {
+const Element = ({ type, id }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   //   useDrag
@@ -11,7 +11,8 @@ const Element = ({ type }) => {
     // "type" is required. It is used by the "accept" specification of drop targets.
     type: "Card",
     item: {
-        type: type,
+      type,
+      id,
     },
     // The collect function utilizes a "monitor" instance (see the Overview for what this is)
     // 		// to pull important pieces of state from the DnD system.
@@ -29,6 +30,7 @@ const Element = ({ type }) => {
   }
   return (
     <>
+      {/* <DragPreviewImage connect={dragPreview} src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQScly7lF7rMUrYwtklSxlnJfrHv0Y8nKQMkA&usqp=CAU"} /> */}
       <div
         ref={drag}
         onClick={handleOnClick}

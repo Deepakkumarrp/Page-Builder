@@ -19,9 +19,9 @@ const Sidebar = () => {
     ])
   return (
     <div className="sidebar">
-      <Element type="label" key={1}/>
-      <Element type="input" key={2}/>
-      <Element type="button" key={3}/>
+      <Element type="label" id={1} key={1}/>
+      <Element type="input" id={2} key={2}/>
+      <Element type="button" id={3} key={3}/>
       
     </div>
   );
