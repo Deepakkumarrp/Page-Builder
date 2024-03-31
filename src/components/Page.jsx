@@ -1,10 +1,12 @@
-import React, { useRef, useState } from "react";
+import React, { createContext, useEffect, useRef, useState } from "react";
 import { useDrop } from "react-dnd";
 import Modal from "./Modal";
 import ElementRenderer from "./ElementRenderer";
 import idGenerator from "../utils/idGenerator";
 
-const Page = ({ children }) => {
+const Context = createContext();
+
+const Page = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [elements, setElements] = useState([]);
   const [config, setConfig] = useState({
@@ -16,6 +18,17 @@ const Page = ({ children }) => {
     fontSize: 16,
     text: "",
   });
+
+  useEffect(() => {
+    // Load elements data from local storage on component mount
+    const storedElements = JSON.parse(localStorage.getItem("elements")) || [];
+    setElements(storedElements);
+  }, []);
+
+  useEffect(() => {
+    // Save elements data to local storage whenever it changes
+    localStorage.setItem("elements", JSON.stringify(elements));
+  }, [elements]);
 
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "Card",
@@ -30,7 +43,7 @@ const Page = ({ children }) => {
       } else if (item.from === "page") {
         const updatedElement = { ...item.config, x, y };
         handleUpdateElement(updatedElement);
-        console.log("Update:",elements)
+        console.log("Update:", elements, updatedElement);
       }
     },
 
@@ -53,10 +66,10 @@ const Page = ({ children }) => {
   // Add
   const handleAddElement = (newElement) => {
     const present = elements.filter((el) => el.id == newElement.id);
-    console.log("present:",present)
-    if(present.length >= 1) {
+    console.log("present:", present);
+    if (present.length >= 1) {
       return handleUpdateElement(newElement);
-    }else{
+    } else {
       return setElements([...elements, newElement]);
     }
   };
@@ -77,54 +90,45 @@ const Page = ({ children }) => {
     setElements(filteredElements);
   };
 
-  const handleAllElements = () => {
-    console.log(elements);
-  };
+  // Function to see all elements on console
+  // const handleAllElements = () => {
+  //   console.log(elements);
+  // };
+
   return (
+    <Context.Provider value={{elements,handleAddElement,handleDeleteElement,handleUpdateElement}} >
     <div
       className="page"
       ref={drop}
       style={{
-        backgroundColor: isOver ? "red" : "green",
+        backgroundColor: isOver ? "#ccc" : "#f2f2f2",
       }}
-      // ref={(node) => drag(drop(node))}
     >
-      {/* <h1>Page</h1> */}
-      <button onClick={handleAllElements}>watch all Elements</button>
-      {/* {children} */}
+      {/* <button onClick={handleAllElements}>watch all Elements</button> */}
+
 
       {/* Render Modal */}
       <Modal
         isOpen={isModalOpen}
         handleClose={() => setIsModalOpen(false)}
         modalType={config}
-        handleElement={{
-          elements,
-          handleAddElement,
-          handleUpdateElement,
-          handleDeleteElement,
-        }}
       />
 
       {/* Render the elements */}
 
-      {elements.length > 0 &&
+      {
         elements.map((element, i) => {
           return (
             <ElementRenderer
-              key={i}
+              key={element.id}
               config={element}
-              handleElement={{
-                elements,
-                handleAddElement,
-                handleUpdateElement,
-                handleDeleteElement,
-              }}
             />
           );
         })}
     </div>
+     </Context.Provider>
   );
 };
 
 export default Page;
+export {Context}

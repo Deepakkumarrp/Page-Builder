@@ -1,33 +1,29 @@
-import React, { useState } from "react";
-import idGenerator from "../utils/idGenerator";
+import React, { useContext, useEffect, useState } from "react";
+import { Context } from "./Page";
 
-const Modal = ({ isOpen, handleClose, modalType, handleElement }) => {
-    if (!isOpen) return null;
-    const { elements,
-            handleAddElement,
-            handleUpdateElement,
-            handleDeleteElement } = handleElement;
+const Modal = ({ isOpen, handleClose, modalType }) => {
+  if (!isOpen) return null;
+  const {
+    elements,
+    handleAddElement,
+  } = useContext(Context);
+  console.log("ModelPage:  ", elements);
 
-    const [config, setConfig] = useState({
-            id: modalType.id ,
-            type: modalType.type,
-            x: modalType.x,
-            y: modalType.y,
-            fontSize : modalType.fontSize,
-            fontWeight: modalType.fontWeight,
-            text: modalType.text
-    });
-    console.log("Model:", config);
+  const [config, setConfig] = useState({
+    id: modalType.id,
+    type: modalType.type,
+    x: modalType.x,
+    y: modalType.y,
+    fontSize: modalType.fontSize,
+    fontWeight: modalType.fontWeight,
+    text: modalType.text,
+  });
+
+ 
+  console.log("Model:", config);
 
   function handleSave(e) {
     e.preventDefault();
-    // const p = elements.filter((el) => el.id === config.id );
-    // console.log(p);
-    // if(p.length > 0){
-
-    // }
-    console.log(config);
-    console.log("saved");
     handleAddElement(config);
     handleClose();
   }
@@ -44,37 +40,62 @@ const Modal = ({ isOpen, handleClose, modalType, handleElement }) => {
         </span>
         <h3>Edit {modalType.type}</h3>
         <form action="" onSubmit={handleSave}>
-        <div className="form-group">
+          <div className="form-group">
             <label>
-                Text:
-                <input type="text" name="text" value={config.text} onChange={handleChange} />
+              Text:
+              <input
+                type="text"
+                name="text"
+                value={config.text}
+                onChange={handleChange}
+              />
             </label>
-        </div>
-        <div className="form-group">
+          </div>
+          <div className="form-group">
             <label>
-                X Coordinate:
-                <input type="number" name="x" value={config.x} onChange={handleChange} />
+              X Coordinate:
+              <input
+                type="number"
+                name="x"
+                value={config.x}
+                onChange={handleChange}
+              />
             </label>
-        </div>
-        <div className="form-group">
+          </div>
+          <div className="form-group">
             <label>
-                Y Coordinate:
-                <input type="number" name="y" value={config.y} onChange={handleChange} />
+              Y Coordinate:
+              <input
+                type="number"
+                name="y"
+                value={config.y}
+                onChange={handleChange}
+              />
             </label>
-        </div>
-        <div className="form-group">
+          </div>
+          <div className="form-group">
             <label>
-                Font Weight:
-                <input type="number" name="fontWeight" value={config.fontWeight} onChange={handleChange} />
+              Font Weight:
+              <input
+                type="number"
+                name="fontWeight"
+                value={config.fontWeight}
+                onChange={handleChange}
+              />
             </label>
-        </div>
-        <div className="form-group">
+          </div>
+          <div className="form-group">
             <label>
-                Font Size:
-                <input type="number" name="fontSize" value={config.fontSize} onChange={handleChange} />
+              Font Size:
+              <input
+                type="number"
+                name="fontSize"
+                value={config.fontSize}
+                onChange={handleChange}
+              />
             </label>
-        </div>
-            <button>Save</button>
+          </div>
+          <button>Save</button>
         </form>
       </div>
     </div>

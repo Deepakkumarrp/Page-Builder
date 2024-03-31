@@ -1,26 +1,28 @@
 // ElementRenderer.jsx
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useDrag } from "react-dnd";
 import Modal from "./Modal";
+import { Context } from "./Page";
 
-const ElementRenderer = ({ config, handleElement }) => {
+const ElementRenderer = ({ config }) => {
   const {
     elements,
-    handleAddElement,
-    handleUpdateElement,
-    handleDeleteElement} = handleElement
+    handleDeleteElement,
+  } = useContext(Context);
+
   const { type, x, y, fontSize, fontWeight, text } = config;
   const [isSelected, setIsSelected] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  console.log("ELEMENT: ", config);
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "Card",
-    item: { 
+    item: {
       type,
       from: "page",
       config: config,
-      id: config.id
-     },
+      id: config.id,
+    },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
@@ -33,13 +35,13 @@ const ElementRenderer = ({ config, handleElement }) => {
     fontSize: fontSize + "px",
     fontWeight: fontWeight,
     width: "auto",
-    opacity: isDragging ? 0.5 : 1, // Change opacity while dragging
-    cursor: "move", // Change cursor to indicate draggable
-    border: isSelected ? "2px solid red" : "none", // Apply red border if selected
+    opacity: isDragging ? 0.5 : 1, 
+    cursor: "move", 
+    border: isSelected ? "2px solid red" : "none", 
   };
 
   const handleElementClick = () => {
-    setIsSelected(!isSelected); // Toggle selected state on click
+    setIsSelected(!isSelected); 
   };
 
   const handleKeyPress = (e) => {
@@ -48,7 +50,7 @@ const ElementRenderer = ({ config, handleElement }) => {
       console.log(config);
       setIsModalOpen(true);
     }
-    if(isSelected && e.key === "Delete"){
+    if (isSelected && e.key === "Delete") {
       console.log(elements);
       handleDeleteElement(config.id);
     }
@@ -97,14 +99,8 @@ const ElementRenderer = ({ config, handleElement }) => {
           isOpen={isModalOpen}
           handleClose={() => setIsModalOpen(false)}
           modalType={config}
-          handleElement={{
-            elements,
-            handleAddElement,
-            handleUpdateElement,
-            handleDeleteElement,
-          }}
         />
-        // Pass the necessary props to Modal component, like isOpen, handleClose, and config
+
       )}
     </>
   );
