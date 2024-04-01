@@ -9,6 +9,8 @@
   z-index: 1;
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
+  
 
   h2 {
     color: white;
@@ -29,6 +31,7 @@
 /* Page */
 .page {
   height: 100vh;
+  width: 100vw;
 }
 
 
@@ -111,7 +114,7 @@ button:hover {
 }
 
 
-@media all and (max-width: 600px) {
+/* @media all and (max-width: 600px) {
   .sidebar {
     width: 130px;
     font-size: 14px;
@@ -120,4 +123,4 @@ button:hover {
       font-size: 20px;
     }
   }
-}
+} */
