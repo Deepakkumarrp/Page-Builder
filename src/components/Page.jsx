@@ -101,7 +101,7 @@ const Page = () => {
       className="page"
       ref={drop}
       style={{
-        backgroundColor: isOver ? "#ccc" : "#f2f2f2",
+        backgroundColor: isOver ? "#ccc" : "white",
       }}
     >
       {/* <button onClick={handleAllElements}>watch all Elements</button> */}

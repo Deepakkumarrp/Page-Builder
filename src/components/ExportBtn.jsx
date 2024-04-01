@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 const ExportButton = () => {
-    
+
     const handleExport = () => { 
     const elements = JSON.parse(localStorage.getItem("elements"));
     const json = JSON.stringify(elements, null, 2);
@@ -16,7 +16,7 @@ const ExportButton = () => {
     URL.revokeObjectURL(url);
   };
 
-  return <button onClick={handleExport}>Export Configuration</button>;
+  return <button className="exportBtn" onClick={handleExport}>Export</button>;
 };
 
 export default ExportButton;
