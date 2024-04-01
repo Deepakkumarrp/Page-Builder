@@ -111,14 +111,14 @@ button {
 button:hover {
   background-color: #0056b3;
 }
-
+/* 
 button {
   background-color: blue;
   color: white;
 }
 button:hover{
   background-color: red;
-}
+} */
 
 
 @media all and (max-width: 600px) {
